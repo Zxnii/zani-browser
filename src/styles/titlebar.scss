@@ -1,0 +1,138 @@
+#titlebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 35px;
+  background-color: rgb(57, 58, 59);
+  z-index: 2;
+  -webkit-app-region: drag;
+
+  #window-controls {
+    height: 100%;
+
+    -webkit-app-region: no-drag;
+
+    .window-control {
+      position: relative;
+      width: 50px;
+      height: 100%;
+      box-sizing: border-box;
+      display: inline-block;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &:hover {
+        background-color: rgb(41, 41, 41);
+      }
+
+      &.close:hover {
+        background-color: #ac1b1b;
+      }
+    }
+  }
+
+  #omnibox {
+    display: flex;
+    flex-grow: 1;
+    -webkit-app-region: no-drag;
+    background-color: rgb(108, 109, 110);
+    border-radius: 5px;
+    height: 25px;
+    margin: 5px;
+    max-width: 50%;
+    padding: 0 5px;
+    flex-direction: row;
+    cursor: text;
+    justify-content: center;
+
+    #omnibox-closed-inner {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row;
+      justify-content: center;
+
+      img {
+        float: left;
+        width: 15px;
+        height: 15px;
+        margin: 5px;
+      }
+
+      p {
+        display: inline-block;
+        margin: 0;
+        line-height: 25px;
+        color: white;
+        font-weight: 500;
+      }
+    }
+
+    #refresh {
+      width: 25px;
+      height: 25px;
+      position: relative;
+      cursor: default;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        justify-self: flex-end;
+        margin-left: auto;
+      }
+    }
+
+    #omnibox-input {
+      background-color: transparent;
+      color: white;
+      font-family: "SF Pro", sans-serif;
+      width: 100%;
+      height: 100%;
+      border: none;
+      font-weight: bold;
+      outline: none;
+    }
+  }
+
+  #history-controls {
+    margin: 5px;
+    height: 25px;
+    -webkit-app-region: no-drag;
+
+    .history-button {
+      position: relative;
+      width: 35px;
+      height: 25px;
+      border-radius: 5px;
+      box-sizing: border-box;
+      padding: 5px;
+      background-color: rgb(108, 109, 110);
+      display: inline-block;
+
+      img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 15px;
+        height: 15px;
+      }
+
+      &:last-child {
+        margin-left: 5px;
+      }
+    }
+  }
+}

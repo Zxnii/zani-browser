@@ -1,0 +1,29 @@
+* {
+    user-select: none;
+    font-size: 13px;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+:root, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    font-family: "SF Pro", sans-serif;
+    font-weight: 300;
+
+    webview {
+        display: inline-flex;
+        flex-grow: 1;
+    }
+}
