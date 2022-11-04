@@ -6,6 +6,7 @@ import Main from "../Main";
 import {extractHost, isSecure, listenAll} from "../../util";
 import WebviewTag from "../../types/WebviewTag";
 import Omnibox from "./Omnibox";
+import classNames from "classnames";
 
 interface Props {
 }
@@ -65,10 +66,10 @@ export default class Titlebar extends React.Component<Props, State> {
         return (
             <div id="titlebar">
                 <div id="history-controls">
-                    <div className="history-button">
+                    <div className={classNames("history-button", { "inactive": !this.state.canGoBackward })} onClick={this.navigateBackward.bind(this)}>
                         <img src="./assets/icons/back.svg" alt=""></img>
                     </div>
-                    <div className="history-button">
+                    <div className={classNames("history-button", { "inactive": !this.state.canGoForward })} onClick={this.navigateForward.bind(this)}>
                         <img src="./assets/icons/forward.svg" alt=""></img>
                     </div>
                 </div>
@@ -89,13 +90,28 @@ export default class Titlebar extends React.Component<Props, State> {
         )
     }
 
-    public updateState() {
-        const webview = Main.getInstance().getActiveWebview() as WebviewTag;
+    public updateState(): void {
         const {pageId} = Main.getInstance().getActivePage();
 
         this.activePageId = pageId;
 
         this.attachListeners(pageId);
+    }
+
+    public navigateForward(): void {
+        const activeWebview = (this.state.currentWebview ?? Main.getInstance().getActiveWebview()) as WebviewTag;
+
+        if (activeWebview.canGoForward()) {
+            activeWebview.goForward();
+        }
+    }
+
+    public navigateBackward(): void {
+        const activeWebview = (this.state.currentWebview ?? Main.getInstance().getActiveWebview()) as WebviewTag;
+
+        if (activeWebview.canGoBack()) {
+            activeWebview.goBack();
+        }
     }
 
     private attachListeners(pageId: string): void {
@@ -117,7 +133,9 @@ export default class Titlebar extends React.Component<Props, State> {
 
                     this.setState({
                         omniboxHost: extractHost(webviewUrl),
-                        omniboxSecure: isSecure(webview)
+                        omniboxSecure: isSecure(webview),
+                        canGoForward: webview.canGoForward(),
+                        canGoBackward: webview.canGoBack()
                     });
                 }
             });

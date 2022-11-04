@@ -133,6 +133,12 @@
             &:last-child {
                 margin-left: 5px;
             }
+
+            &.inactive {
+                img {
+                    filter: brightness(50%);
+                }
+            }
         }
     }
 }
