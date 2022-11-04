@@ -1,11 +1,10 @@
 import React from "react";
-import native from "../native";
 
-import "../styles/tabs.scss";
+import "../../styles/tabs.scss";
 
 import Tab from "./Tab";
-import OpenPage from "../types/OpenPage";
-import Main from "./Main";
+import OpenPage from "../../types/OpenPage";
+import Main from "../Main";
 
 interface Props {
     pages: OpenPage[];
@@ -44,13 +43,13 @@ export default class TabBar extends React.Component<Props, State> {
         )
     }
 
-    private openNewTab(): void {
-        Main.getInstance().openPage();
-    }
-
     public updateState() {
         this.setState({
             pages: this.props.pages
         })
+    }
+
+    private openNewTab(): void {
+        Main.getInstance().openPage();
     }
 }

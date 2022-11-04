@@ -3,9 +3,9 @@ import React from "react";
 import "../styles/index.scss";
 
 import Page from "./Page";
-import TabBar from "./TabBar";
+import TabBar from "./tabs/TabBar";
 import OpenPage from "../types/OpenPage";
-import Titlebar from "./Titlebar";
+import Titlebar from "./titlebar/Titlebar";
 import WebviewTag from "../types/WebviewTag";
 import native from "../native";
 
@@ -28,26 +28,8 @@ export default class Main extends React.Component {
         this.openPage();
     }
 
-    private async attachHandlers(page: OpenPage): Promise<void> {
-        const webview = page.webviewRef.current;
-
-        if (webview) {
-            const contents = await native.webContents.fromId(webview.getWebContentsId());
-
-            contents.setWindowOpenHandler((details) => {
-                switch (details.disposition) {
-                    case "foreground-tab":
-                        this.openPage(details.url);
-                        break;
-                    case "background-tab":
-                        this.openPage(details.url, false);
-                        break;
-                    case "default":
-                        this.openPage(details.url);
-                        break;
-                }
-            });
-        }
+    public static getInstance(): Main {
+        return Main.instance;
     }
 
     public openPage(url?: string, makeActive: boolean = true): void {
@@ -82,7 +64,7 @@ export default class Main extends React.Component {
     }
 
     public getActivePage(): OpenPage {
-        return this.openPages.find(({ pageId }) => pageId === this.activePage) ?? this.openPages[0];
+        return this.openPages.find(({pageId}) => pageId === this.activePage) ?? this.openPages[0];
     }
 
     public getActiveWebview(): WebviewTag | null {
@@ -130,11 +112,29 @@ export default class Main extends React.Component {
         }
     }
 
-    public static getInstance(): Main {
-        return Main.instance;
-    }
-
     public componentDidMount(): void {
         this.mounted = true;
+    }
+
+    private async attachHandlers(page: OpenPage): Promise<void> {
+        const webview = page.webviewRef.current;
+
+        if (webview) {
+            const contents = await native.webContents.fromId(webview.getWebContentsId());
+
+            contents.setWindowOpenHandler((details) => {
+                switch (details.disposition) {
+                    case "foreground-tab":
+                        this.openPage(details.url);
+                        break;
+                    case "background-tab":
+                        this.openPage(details.url, false);
+                        break;
+                    case "default":
+                        this.openPage(details.url);
+                        break;
+                }
+            });
+        }
     }
 }

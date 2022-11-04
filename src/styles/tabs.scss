@@ -21,26 +21,19 @@
         flex: 1 1 0;
         height: 26.5px;
         line-height: 25px;
+        position: relative;
         padding: 0 5px;
         box-sizing: border-box;
         vertical-align: middle;
         background-color: rgb(52, 52, 54);
-        position: relative;
         color: white;
         align-items: center;
         flex-direction: column;
         border-top: rgb(91, 91, 93) 1.5px solid;
+        overflow: hidden;
 
         &:not(:first-of-type) {
             border-left: rgb(91, 91, 93) 1.5px solid;
-        }
-
-        &.inactive {
-            background-color: rgb(37, 38, 39);
-
-            #close {
-                display: none;
-            }
         }
 
         #close {
@@ -50,22 +43,37 @@
             right: 5px;
             top: 50%;
             transform: translateY(-50%);
+            z-index: 3;
 
             &:hover {
                 filter: brightness(110%);
             }
         }
 
+        > .fade {
+            position: absolute;
+            right: 1px;
+            width: 30px;
+            height: 25px;
+            z-index: 2;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(52, 52, 54, 1) 30%);
+        }
+
         > .tab-inner {
+            max-width: 100%;
+            position: relative;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             height: 25px;
+            min-width: 0;
 
             p {
-                position: relative;
                 display: inline-block;
                 margin: 0 0 0 5px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 100%;
             }
 
             img {
@@ -75,6 +83,18 @@
                 width: 15px;
                 height: 15px;
                 margin: 5px 0;
+            }
+        }
+
+        &.inactive {
+            background-color: rgb(37, 38, 39);
+
+            > #close {
+                display: none;
+            }
+
+            > .fade {
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(37, 38, 39, 1) 85%);
             }
         }
     }

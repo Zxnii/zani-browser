@@ -18,7 +18,7 @@ export function isSecure(webview: WebviewTag): boolean {
 
 export function isValidUri(input: string): boolean {
     try {
-        const { protocol, hostname } = new URL(input);
+        const { protocol } = new URL(input);
 
         return input.startsWith(protocol);
     } catch {
@@ -28,4 +28,10 @@ export function isValidUri(input: string): boolean {
 
 export function shouldTryOpen(input: string): boolean {
     return isValidUri(input) || /^(((?!\-))(xn\-\-)?[a-z0-9\-_]{0,61}[a-z0-9]{1,1}\.)*(xn\-\-)?([a-z0-9\-]{1,61}|[a-z0-9\-]{1,30})\.[a-z]{2,}$/.test(input);
+}
+
+export function listenAll(element: HTMLElement, events: string[], fn: (...args: unknown[]) => void) {
+    events.forEach(event => {
+        element.addEventListener(event, fn);
+    });
 }
